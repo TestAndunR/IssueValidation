@@ -11,7 +11,7 @@ exports.handler = function (event, context, callback) {
 		Message: {
 			Body: {
 				Html: {
-					Data: '<html>\n<head><title>Test</title<head>\n</html>\n<body>ss</body>'
+					Data: '<html>\n<head><title>Test</title></head>\n<body>\nAndun Kannangara<br/>\n<h1>Hello</h1></body>\n</html>'
 				}
 			},
 			Subject: {
@@ -27,3 +27,7 @@ exports.handler = function (event, context, callback) {
 
 	callback(null, 'Successfully executed');
 }
+
+
+
+

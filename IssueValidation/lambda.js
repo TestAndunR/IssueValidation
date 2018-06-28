@@ -1,26 +1,28 @@
 let AWS = require('aws-sdk');
-const cognito_idp = new AWS.CognitoIdentityServiceProvider();
+let SL_GCP = require('slappforge-sdk-gcp');
+let sqlConnMgr = require('./SqlConnMgr');
+const sql = new SL_GCP.SQL(sqlConnMgr);
+let SL_AWS = require('slappforge-sdk-aws');
+let connectionManager = require('./ConnectionManager');
+const rds = new SL_AWS.RDS(connectionManager);
 
 exports.handler = function (event, context, callback) {
 
-    // cognito_idp.listUsers({
-    //     UserPoolId: process.env.UserPoolId_cognitoissue310, AttributesToGet: '[address,birthdate,email,family_name,gender,given_name,locale]'
-    // }, function (error, data) {
-    //     if (error) {
-    //         // implement error handling logic here
-    //         throw error;
-    //     }
-    //     // your logic goes within this block
-    // });
-
-    cognito_idp.listUsers({
-        UserPoolId: process.env.UserPoolId_cognitotest
-    }, function (error, data) {
+    // You can pass the existing connection to this function.
+    // A new connection will be created if it's not present as the third param.
+    // You must always end/destroy the DB connection after it's used.
+    sql.query({
+        instanceIdentifier: 'gcptestandun1',
+        query: 'CREATE TABLE Persons (PersonID int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255)  );',
+        inserts: []
+    }, function (error, results, connection) {
         if (error) {
-            // implement error handling logic here
             throw error;
+        } else {
+            // use `results` to do your magic
+            console.log(results);
         }
-        // your logic goes within this block
+        connection.end();
     });
 
 

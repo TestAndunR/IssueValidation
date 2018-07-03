@@ -5,6 +5,7 @@ const sql = new SL_GCP.SQL(sqlConnMgr);
 let SL_AWS = require('slappforge-sdk-aws');
 let connectionManager = require('./ConnectionManager');
 const rds = new SL_AWS.RDS(connectionManager);
+console.log("Test")
 
 exports.handler = function (event, context, callback) {
 
